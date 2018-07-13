@@ -11,9 +11,12 @@ module.exports = Server;
 
 //Creating Http Servers
 Server.prototype.createServer = function(options) {
-    spdy
-        .createServer(options, this.app)
-        .listen(this.port, (error) => {
+    this.server = spdy.createServer(options, this.app);
+    this.listenServer();
+}
+
+Server.prototype.listenServer = function() {
+    this.server.listen(this.port, (error) => {
         if (error) {
             console.error(error)
             return process.exit(1)
@@ -23,4 +26,8 @@ Server.prototype.createServer = function(options) {
     });
 }
 
-
+Server.prototype.stopServer = function() {
+    if(this.server.getMaxListeners() > 0) {
+        this.server.removeAllListeners();
+    }
+}
