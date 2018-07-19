@@ -1,4 +1,6 @@
 const spdy = require('spdy');
+const FileHandler = require('../service/file-operations');
+
 
 //Set Port
 function Server(port, app) {
@@ -10,7 +12,16 @@ function Server(port, app) {
 module.exports = Server;
 
 //Creating Http Servers
-Server.prototype.createServer = function(options) {
+Server.prototype.createServer = function() {
+    const fileHandler = new FileHandler();
+    let options = _addCertificates(fileHandler);
+    options.spdy = {};
+    options.spdy.protocols = _addProtocols();
+    options.spdy.plain = false;
+    options.spdy.connection = {
+        windowSize: 1024 * 1024,
+        autoSpdy31: false
+    }
     this.server = spdy.createServer(options, this.app);
     this.listenServer();
 }
@@ -30,4 +41,15 @@ Server.prototype.stopServer = function() {
     if(this.server.getMaxListeners() > 0) {
         this.server.removeAllListeners();
     }
+}
+
+function _addCertificates(fileHandler) {
+    return {
+        key: fileHandler.readFile('server/server-module/https-keys/server.key'),
+        cert:  fileHandler.readFile('server/server-module/https-keys/server.crt')
+    }
+}
+
+function _addProtocols() {
+    return ['h2', 'spdy/3.1'];
 }

@@ -1,7 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const Server = require('./server-module/server');
-const FileHandler = require('./service/file-operations');
 const app = express();
 const bearerToken = require('express-bearer-token');
 
@@ -20,11 +19,4 @@ app.get('*', (request, response) => {
     response.sendFile('index.html', {root: './dist'});
 });
 
-const fileHandler = new FileHandler();
-const server = new Server(3001, app);
-const options = {
-    key: fileHandler.readFile('server/server-module/https-keys/server.key'),
-    cert:  fileHandler.readFile('server/server-module/https-keys/server.crt')
-}
-
-server.createServer(options);
+new Server(3001, app).createServer();
