@@ -1,5 +1,7 @@
 const spdy = require('spdy');
 const FileHandler = require('../service/file-operations');
+let Log = require('log');
+let logger = new Log();
 
 
 //Set Port
@@ -29,10 +31,10 @@ Server.prototype.createServer = function() {
 Server.prototype.listenServer = function() {
     this.server.listen(this.port, (error) => {
         if (error) {
-            console.error(error)
+            logger.error(error);
             return process.exit(1)
         } else {
-            console.log('Listening on port: ' + this.port + '.')
+            logger.info('Listening on port %s', this.port);
         }
     });
 }
