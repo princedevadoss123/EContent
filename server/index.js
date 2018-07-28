@@ -5,6 +5,7 @@ const app = express();
 const bearerToken = require('express-bearer-token');
 let Log = require('log');
 let logger = new Log();
+var ClientRS = require('./client-module/client');
 
 // Parsers
 app.use(bodyParser.json());
@@ -29,8 +30,13 @@ app.use(function(req, res, next) {
 });
 
 //Sample route
-app.get('/hello', function(request,response){ 
-    response.send('docs');
+app.get('/hello', function(request,response){
+    var os = require( 'os' );
+    var networkInterfaces = os.networkInterfaces();
+    let client = new ClientRS(networkInterfaces.en0[1].address, '3002', '/');
+    client.getValue(function(returnData) {
+        response.send(returnData);
+    });
 });
 
 // Send all other requests to the Angular app
