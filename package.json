@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "npm run build & concurrently --kill-others \"npm run serve\"",
     "build": "ng build --watch",
-    "serve": "node --inspect ./server/index",
+    "serve": "node ./server/index",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

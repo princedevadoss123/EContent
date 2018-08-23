@@ -33,7 +33,7 @@ app.use(function(req, res, next) {
 app.get('/hello', function(request,response){
     var os = require( 'os' );
     var networkInterfaces = os.networkInterfaces();
-    let client = new ClientRS(networkInterfaces.en0[1].address, '3002', '/');
+    let client = new ClientRS(networkInterfaces.en0[1].address, '3002', '/app/api/cardProcess');
     client.getValue(function(returnData) {
         response.send(returnData);
     });
