@@ -6,6 +6,8 @@ const bearerToken = require('express-bearer-token');
 let Log = require('log');
 let logger = new Log();
 var ClientRS = require('./client-module/client');
+var dbWrapper = require('./mongo-db/index');
+var registerProcess = require('./authentication/lib/api/register');
 
 // Parsers
 app.use(bodyParser.json());
@@ -19,6 +21,20 @@ app.use(require('express-status-monitor')());
 
 // Angular DIST output folder
 app.use(express.static('./dist'));
+
+
+
+new Promise(function(resolve, reject){
+    logger.info('Before DB wrapper');
+    dbWrapper.init(resolve, reject);
+    logger.info('After DB wrapper');
+    
+})
+.then(function(data) {
+      if(data){
+        logger.info('Connection successful');
+    }  
+});
 
 //Details of request
 app.use(function(req, res, next) {
@@ -43,5 +59,7 @@ app.get('/hello', function(request,response){
 app.get('*', (request, response) => {
     response.sendFile('index.html', {root: './dist'});
 });
+
+app.use('/register', registerProcess);
 
 new Server(3001, app).createServer();
