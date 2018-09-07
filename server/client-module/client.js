@@ -22,7 +22,10 @@ ClientRS.prototype.getValue = function(callback)
             method: 'GET',
             rejectUnauthorized: false,
             requestCert: true,
-            agent: false   
+            agent: false,
+            headers: {
+                Authorization: ' Bearer '+ process.env.CARD_BEARER_TOKEN
+            }  
     };
 
     var req = https.request(options, function(res) {
