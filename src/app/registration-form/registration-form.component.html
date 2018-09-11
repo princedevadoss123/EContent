@@ -1,0 +1,61 @@
+<!-- <div class = "form-align">
+</div> -->
+<form class="reg-form"> 
+  <div class="form-head">
+    <ul class="form-nav-list">
+      <li id="userHeader" class="form-nav-list-item" [ngClass]="{ 'active': userForm}"><a (click)="onUserClick()">User</a></li>
+      <li id="authorHeader" class="form-nav-list-item" [ngClass]="{ 'active': authorForm}"><a (click)="onAuthorClick()">Author</a></li>
+    </ul>
+  </div>
+  <div id="user" class="form-body" [ngClass]="{ 'hide': authorForm}">
+    <div class="form-control">
+      <label for="name"></label>
+      <input type="text" name="name" placeholder="Name">
+    </div>
+    
+    <div class="form-control">
+      <label for="email"></label>
+      <input type="email" name="email" placeholder="Email">
+    </div>
+    
+    <div class="form-control">
+      <label for="password"></label>
+      <input type="password" name="password" placeholder="Password">
+    </div>
+    
+    <div class="form-control">
+      <label for="phone"></label>
+      <input type="text" name="phone" placeholder="Phone">
+    </div>
+  </div>
+  <div id="author" class="form-body" [ngClass]="{ 'hide': userForm}">
+    <div class="form-control">
+      <label for="name"></label>
+      <input type="text" name="name" placeholder="Name">
+    </div>
+    
+    <div class="form-control">
+      <label for="authorid"></label>
+      <input type="text" name="authorid" placeholder="Author ID">
+    </div>
+    
+    <div class="form-control">
+      <label for="email"></label>
+      <input type="email" name="email" placeholder="Email">
+    </div>
+    
+    <div class="form-control">
+      <label for="password"></label>
+      <input type="password" name="password" placeholder="Password">
+    </div>
+    
+    <div class="form-control">
+      <label for="phone"></label>
+      <input type="text" name="phone" placeholder="Phone">
+    </div>
+  </div>
+  <div class="form-footer">
+    <button id="form-submit"> Proceed </button>
+  </div>
+</form>
+
