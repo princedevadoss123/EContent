@@ -19,10 +19,12 @@ registerController.prototype.register = function (request, response) {
             account.save(function (err) {
                 if (err) {
                     response.send({ message: 'Error saving account : ' + err });
-                    throw err;
+                  
+                    // throw err;
                 }
-                logger.info('Account saved successfully');
-                response.send({ message: 'Account saved successfully' });
+                else
+                {  logger.info('Account saved successfully');
+                   response.send({ message: 'Account saved successfully' });}
             });
 
         })
