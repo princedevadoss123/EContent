@@ -7,7 +7,7 @@ let Log = require('log');
 let logger = new Log();
 var ClientRS = require('./client-module/client');
 var dbWrapper = require('./mongo-db/index');
-var registerProcess = require('./authentication/lib/api/register');
+var authenticationProcess = require('./authentication/lib/api');
 
 // Parsers
 app.use(bodyParser.json());
@@ -60,6 +60,6 @@ app.get('*', (request, response) => {
     response.sendFile('index.html', {root: './dist'});
 });
 
-app.use('/register', registerProcess);
+app.use('/app', authenticationProcess);
 
 new Server(3001, app).createServer();
