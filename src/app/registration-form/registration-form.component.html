@@ -1,61 +1,61 @@
-<!-- <div class = "form-align">
-</div> -->
-<form class="reg-form"> 
+<div class = "form-align">
+</div> 
+<div class="reg-form"> 
   <div class="form-head">
     <ul class="form-nav-list">
       <li id="userHeader" class="form-nav-list-item" [ngClass]="{ 'active': userForm}"><a (click)="onUserClick()">User</a></li>
       <li id="authorHeader" class="form-nav-list-item" [ngClass]="{ 'active': authorForm}"><a (click)="onAuthorClick()">Author</a></li>
     </ul>
   </div>
-  <div id="user" class="form-body" [ngClass]="{ 'hide': authorForm}">
+  <form id="user" class="form-body" [ngClass]="{ 'hide': authorForm}" #userSignUpForm="ngForm">
     <div class="form-control">
       <label for="name"></label>
-      <input type="text" name="name" placeholder="Name">
+      <input type="text" placeholder="Name" [(ngModel)] = "userModel.name" name="name" #name="ngModel" required>
     </div>
     
     <div class="form-control">
       <label for="email"></label>
-      <input type="email" name="email" placeholder="Email">
+      <input type="email" name="email" placeholder="Email" [(ngModel)] = "userModel.email" #email="ngModel" required>
     </div>
     
     <div class="form-control">
       <label for="password"></label>
-      <input type="password" name="password" placeholder="Password">
+      <input type="password" name="password" placeholder="Password" [(ngModel)] = "userModel.password" #password="ngModel" required>
     </div>
     
     <div class="form-control">
       <label for="phone"></label>
-      <input type="text" name="phone" placeholder="Phone">
+      <input type="text" name="phone" placeholder="Phone" [(ngModel)] = "userModel.phone" #phone="ngModel" required>
     </div>
-  </div>
-  <div id="author" class="form-body" [ngClass]="{ 'hide': userForm}">
+  </form>
+  <form id="author" class="form-body" [ngClass]="{ 'hide': userForm}" #authorSignUpForm="ngForm">
     <div class="form-control">
       <label for="name"></label>
-      <input type="text" name="name" placeholder="Name">
+      <input type="text" name="name" placeholder="Name" [(ngModel)] = "authorModel.name" #name="ngModel" required>
     </div>
     
     <div class="form-control">
       <label for="authorid"></label>
-      <input type="text" name="authorid" placeholder="Author ID">
+      <input type="text" name="authorid" placeholder="Author ID" [(ngModel)] = "authorModel.authorid" #authorid="ngModel" required>
     </div>
     
     <div class="form-control">
       <label for="email"></label>
-      <input type="email" name="email" placeholder="Email">
+      <input type="email" name="email" placeholder="Email" [(ngModel)] = "authorModel.email" #email="ngModel" required>
     </div>
     
     <div class="form-control">
       <label for="password"></label>
-      <input type="password" name="password" placeholder="Password">
+      <input type="password" name="password" placeholder="Password" [(ngModel)] = "authorModel.password" #password="ngModel" required>
     </div>
     
     <div class="form-control">
       <label for="phone"></label>
-      <input type="text" name="phone" placeholder="Phone">
+      <input type="text" name="phone" placeholder="Phone" [(ngModel)] = "authorModel.phone" #phone="ngModel" required>
     </div>
-  </div>
+  </form>
   <div class="form-footer">
-    <button id="form-submit"> Proceed </button>
+    <button id="form-submit" type="submit" [disabled]="!userSignUpForm.form.valid && !authorSignUpForm.form.valid" (click)="onSignUp()"> Proceed </button>
   </div>
-</form>
+</div>
 

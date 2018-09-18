@@ -87,6 +87,12 @@
       font-size: 1em;
       margin-top: 8px;
 }
+
+#form-submit:disabled {
+    opacity: .5!important;
+    cursor: default!important;
+    pointer-events: none;
+}
   
 #form-submit:hover{
     background-color: #005E7E;
