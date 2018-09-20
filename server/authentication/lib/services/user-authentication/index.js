@@ -1,6 +1,6 @@
 let Authentication = require('../authentication/index');
 
-function UserAuthentication(request, payload) {
+function UserAuthentication(payload) {
     Authentication.call(this, 'User-Account', payload);
 }
 

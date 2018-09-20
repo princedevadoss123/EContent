@@ -17,7 +17,7 @@ function _emailVerify(request, response) {
 
     }
     else {
-        userService = new UserAuthService(request, payload);
+        userService = new UserAuthService(payload);
         userService.emailVerify(request).then(function(result) {
             response.send(result);
         })
