@@ -55,10 +55,7 @@ app.get('/hello', function(request,response){
     });
 });
 
-// Send all other requests to the Angular app
-app.get('*', (request, response) => {
-    response.sendFile('index.html', {root: './dist'});
-});
+
 
 app.use('/app', authenticationProcess);
 

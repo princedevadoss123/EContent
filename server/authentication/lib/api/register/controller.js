@@ -1,37 +1,28 @@
-var mongoose = require('mongoose');
-var accountModel = require('./model');
-
-let bcrypt = require('bcryptjs');
-let BCRYPT_SALT_ROUNDS = 12;
-let Log = require('log');
-let logger = new Log();
+let AuthorAuthService = require('../../services/author-authentication/index');
+let UserAuthService = require('../../services/user-authentication/index');
 
 function registerController() { }
 
 module.exports = registerController;
 
+let authorService, userService;
 registerController.prototype.register = function (request, response) {
-    this.accountObject = new accountModel(mongoose);
-    let Account = accountObject.getAccountModel();
-    bcrypt.hash(request.body.password, BCRYPT_SALT_ROUNDS)
-        .then(function (hashedPassword) {
-            let account = new Account({ userName: request.body.userName, hashedPassword: hashedPassword, emailId: request.body.emailId, phoneNumber: request.body.phoneNumber, authorId: request.body.authorId });
-            account.save(function (err) {
-                if (err) {
-                    response.send({ message: 'Error saving account : ' + err });
-                  
-                    // throw err;
-                }
-                else
-                {  logger.info('Account saved successfully');
-                   response.send({ message: 'Account saved successfully' });}
-            });
-
+    if(request.body.authorId) {
+        authorService = new AuthorAuthService().register(request);
+    }
+    else {
+        let payload = { 
+            userName: request.body.userName,
+            emailId: request.body.emailId,
+            phoneNumber: request.body.phoneNumber,
+            verified: false
+        };
+        userService = new UserAuthService(request, payload);
+        userService.register(request).then(function(result) {
+            response.send(result);
         })
-        .catch(function (error) {
-            logger.error("Error saving account: " + error);
-            response.send({ message: 'Error saving account'+ error });
-            next();
+        .catch(function(error) {
+            response.send(error);
         });
-
+    }
 }

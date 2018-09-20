@@ -1,5 +1,7 @@
-var express = require('express');
-var RegisterRouter = express.Router();
-var register = require('./register');
+let express = require('express');
+let RegisterRouter = new express.Router();
+let register = require('./register');
+let verify = require('./verify');
 RegisterRouter.use('/api', register);
+RegisterRouter.use('/api', verify);
 module.exports = RegisterRouter;

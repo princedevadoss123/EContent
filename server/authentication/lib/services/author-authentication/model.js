@@ -1,13 +1,13 @@
 require('mongoose-type-email');
 let mongooseIntlPhoneNumber = require('mongoose-intl-phone-number');
 
-function AccountModel(mongoose) {
+function AuthorAccountModel(mongoose) {
     this.mongoose = mongoose;
 }
 
-module.exports = AccountModel;
+module.exports = AuthorAccountModel;
 
-AccountModel.prototype.getAccountModel = function () {
+AuthorAccountModel.prototype.getAccountModel = function () {
 
     const Schema = this.mongoose.Schema;
 
@@ -15,9 +15,10 @@ AccountModel.prototype.getAccountModel = function () {
         userName: { type: String, required: true },
         hashedPassword: { type: String, required: true },
         emailId: { type: this.mongoose.SchemaTypes.Email, required: true, index: { unique: true } },
-        phoneNumber: { type: String, required: true },
-        authorId: { type: String, required: false }
-    },
+        phoneNumber: { type: String, required: true, index: { unique: true } },
+        authorId: { type: String, required: true  },
+        verified: { type: Boolean, required: true }
+        },
         {
             timestamps: true
         });
@@ -32,10 +33,10 @@ AccountModel.prototype.getAccountModel = function () {
 
 
     try {
-        return this.mongoose.model('Account');
+        return this.mongoose.model('Author-Account');
     }
     catch (e) {
-        return this.mongoose.model('Account', accountSchema);
+        return this.mongoose.model('Author-Account', accountSchema);
     }
 
 }
