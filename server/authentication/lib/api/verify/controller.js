@@ -14,7 +14,13 @@ function _emailVerify(request, response) {
     };
     let accountAuthorId = request.query.authorId;
     if(accountAuthorId) {
-
+        authorService = new AuthorAuthService(payload);
+        authorService.emailVerify(request).then(function(result) {
+            response.send(result);
+        })
+        .catch(function(error) {
+            response.send(error);
+        });
     }
     else {
         userService = new UserAuthService(payload);

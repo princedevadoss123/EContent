@@ -31,7 +31,13 @@ function _register(request) {
                 }
                 else {  
                     logger.info('Account saved successfully');
-                    var link = "https://localhost:3001/app/api/verify/email?id=" + request.body.emailId;
+                    let link;
+                    if(request.body.authorId) {
+                        link = 'https://localhost:3001/app/api/verify/email?id=' + request.body.emailId + '&authorId=' + request.body.authorId;
+                    }
+                    else {
+                        link = 'https://localhost:3001/app/api/verify/email?id=' + request.body.emailId;
+                    }
                     var body = 'Hello,<br> Please Click on the link to verify your email.<br><a href=\''+link+'\'>Click here to verify</a>';
                     var subject = 'Verification mail';
                     Mailer(request.body.emailId, subject, body).then(function() {
