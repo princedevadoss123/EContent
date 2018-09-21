@@ -16,8 +16,14 @@ registerController.prototype.register = function (request, response) {
     if(request.body.authorId) {
         payload['authorId'] = request.body.authorId;
         authorService = new AuthorAuthService(payload)
-        authorService.register(request).then(function(result) {
-            response.send(result);
+        authorService.checkAuthorCredentials(request.body.emailId, request.body.authorId)
+        .then(function(result) {
+            authorService.register(request).then(function(result) {
+                response.send(result);
+            })
+            .catch(function(error) {
+                response.send(error);
+            });
         })
         .catch(function(error) {
             response.send(error);

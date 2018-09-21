@@ -3,11 +3,12 @@ var fs = require('fs');
 let Log = require('log');
 let logger = new Log();
 
-function ClientRS(host, port, path)
+function ClientRS(host, port, path, token)
 {
     this.host = host;
     this.port = port;
     this.path = path;
+    this.token = token;
  };
 
 module.exports = ClientRS;
@@ -24,7 +25,7 @@ ClientRS.prototype.getValue = function(callback)
             requestCert: true,
             agent: false,
             headers: {
-                Authorization: ' Bearer '+ process.env.CARD_BEARER_TOKEN
+                Authorization: ' Bearer '+ this.token
             }  
     };
 
