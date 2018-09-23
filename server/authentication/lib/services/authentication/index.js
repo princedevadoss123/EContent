@@ -3,6 +3,8 @@ let bcrypt = require('bcryptjs');
 let mongoose = require('mongoose');
 let accountModel = require('./model');
 let Mailer = require('../../../../service/email-service');
+let jwt = require('jsonwebtoken');
+let secret = require('../../../../../config/jwt-secret');
 let Log = require('log');
 let logger = new Log();
 
@@ -102,8 +104,14 @@ function _login() {
                 bcrypt.compare(password, accountHolder.hashedPassword)
                 .then((result) => {
                     if(result) {
-                        accountHolder['role'] = role;
-                        resolve(accountHolder);
+                        let payloadData = {
+                            sub : accountHolder['emailId'],
+                            role : role
+                        };
+                        let jwtToken = jwt.sign(payloadData, secret.secret, {
+                            expiresIn: 86400
+                          });
+                        resolve(jwtToken);
                     }
                     else {
                         reject({message : 'Invalid Credentials'});

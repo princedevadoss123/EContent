@@ -14,13 +14,8 @@ function _login(request, response) {
     let authService = new AuthService(undefined, payload);
     authService.loginService()
     .then(function(accountHolder) {
-        let cookieContent = {
-            email: request.body.emailId,
-            role: accountHolder.role
-        }
-        response.cookie('userSession', request.body.emailId, { maxAge: 900000, httpOnly: true });
-        response.cookie('userRole', accountHolder.role, { maxAge: 900000, httpOnly: true });
-        response.send(accountHolder);
+        response.cookie('userSession', accountHolder, { maxAge: 900000, httpOnly: true });
+        response.send(200);
     })
     .catch(function(error) {
         response.send(error);
