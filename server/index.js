@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const Server = require('./server-module/server');
 const app = express();
+var cookieParser = require('cookie-parser');
 const bearerToken = require('express-bearer-token');
 let Log = require('log');
 let logger = new Log();
@@ -12,6 +13,9 @@ var authenticationProcess = require('./authentication/lib/api');
 // Parsers
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true}));
+
+//Handling cookies
+app.use(cookieParser());
 
 //Bearer token storage
 app.use(bearerToken());

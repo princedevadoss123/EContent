@@ -1,12 +1,14 @@
 let AuthorAuthService = require('../../services/author-authentication/index');
 let UserAuthService = require('../../services/user-authentication/index');
 
-function registerController() { }
+function RegisterController() { }
 
-module.exports = registerController;
+module.exports = RegisterController;
 
 let authorService, userService;
-registerController.prototype.register = function (request, response) {
+RegisterController.prototype.register = _register;
+
+function _register(request, response) {
     let payload = { 
         userName: request.body.userName,
         emailId: request.body.emailId,

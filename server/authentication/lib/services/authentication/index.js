@@ -15,6 +15,7 @@ module.exports = Authentication;
 
 Authentication.prototype.register = _register;
 Authentication.prototype.emailVerify = _emailVerify;
+Authentication.prototype.loginService = _login;
 
 function _register(request) {
     let account;
@@ -31,12 +32,9 @@ function _register(request) {
                 }
                 else {  
                     logger.info('Account saved successfully');
-                    let link;
+                    let link = 'https://localhost:3001/app/api/verify/email?id=' + request.body.emailId;
                     if(request.body.authorId) {
-                        link = 'https://localhost:3001/app/api/verify/email?id=' + request.body.emailId + '&authorId=' + request.body.authorId;
-                    }
-                    else {
-                        link = 'https://localhost:3001/app/api/verify/email?id=' + request.body.emailId;
+                        link = link + '&authorId=' + request.body.authorId;
                     }
                     var body = 'Hello,<br> Please Click on the link to verify your email.<br><a href=\''+link+'\'>Click here to verify</a>';
                     var subject = 'Verification mail';
@@ -72,14 +70,54 @@ function _emailVerify() {
                     else {
                         resolve({ message: 'Successfully Verified' });
                     }
-                });
+                }.bind(this));
             }
             else {
                 reject({ message: 'User is not existing' });
             }
-        })
+        }.bind(this))
         .catch(function(error) {
             reject({ message: 'Error fetching account' + error });
+        });
+    });
+}
+
+function _login() {
+    this.accountObject = new accountModel(mongoose);
+    return new Promise((resolve, reject) => {
+        let userAccount = this.accountObject.getAccountModel('User-Account');
+        let authorAccount = this.accountObject.getAccountModel('Author-Account');
+        let loginPromise = Promise.all([userAccount.findOne({emailId: this.payload.email}).exec(), authorAccount.findOne({emailId: this.payload.email}).exec()]);
+        loginPromise.then((accountHolders) => {
+            if(accountHolders[0]) {
+                _checkPassword(this.payload.password, accountHolders[0], resolve, reject, 'user');
+            }
+            else if(accountHolders[1]) {
+                _checkPassword(this.payload.password, accountHolders[1], resolve, reject, 'author');
+            }
+            else {
+                reject({message : 'Invalid Credentials'});
+            }
+            function _checkPassword(password, accountHolder, resolve, reject, role) {
+                bcrypt.compare(password, accountHolder.hashedPassword)
+                .then((result) => {
+                    if(result) {
+                        accountHolder['role'] = role;
+                        resolve(accountHolder);
+                    }
+                    else {
+                        reject({message : 'Invalid Credentials'});
+                    }
+                })
+                .catch((error) => {
+                    logger.info('Service Unavailable' + error);
+                    reject({message: 'Service Unavailable'});
+                })
+            }
+        })
+        .catch((error) => {
+            logger.info('Service Unavailable' + error);
+            reject({message: 'Service Unavailable'});
         });
     });
 }
