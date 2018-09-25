@@ -5,12 +5,12 @@ import { Injectable } from '@angular/core';
 })
 export class ValidationService {
 
-  constructor() { }
+  constructor() {}
 
   emailValidation(email) {
-    // var regexp = new RegExp('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$');
-    // return regexp.test(email);
-    return true;
+     var regexp = new RegExp('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$');
+     return regexp.test(email);
+    //return true;
   }
 
   emptyValidation(content) {
@@ -21,10 +21,6 @@ export class ValidationService {
     var regexp = new RegExp('^(?=.*?[a-z])(?=.*?[0-9]).{8,}$');
     return regexp.test(password);
   }
-
-  // confirmPasswordValidation(password, confPassword) {
-  //   return (password === confPassword);
-  // }
 
   phoneNumberValidation(phoneNumber) {
     return new RegExp('^[0-9]+$').test(phoneNumber);

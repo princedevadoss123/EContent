@@ -8,7 +8,7 @@ import { HTTPClientService } from '../services/HTTPClient/httpclient.service';
   styleUrls: ['./registration-form.component.css']
 })
 export class RegistrationFormComponent implements OnInit {
-  HttpClientService
+  
   userForm: boolean = true;
   authorForm: boolean;
   model: any = {};
@@ -20,13 +20,9 @@ export class RegistrationFormComponent implements OnInit {
   intialModelCheck : boolean = false;
 
   constructor(private validator: ValidationService,
-  private httpClient: HTTPClientService) {
-    console.log("Hello");
-  }
+  private httpClient: HTTPClientService) { }
 
-  ngOnInit() {
-    console.log("Init");
-  }
+  ngOnInit() { }
 
   onUserClick(){
     this.userForm = true;
@@ -39,6 +35,7 @@ export class RegistrationFormComponent implements OnInit {
   }
  
   passwordChecker() {
+    console.log("Inside Password Checker");
     if(this.intialModelCheck) {
       this.validator.passwordValidation(this.model.password) ? this.passwordValidator = true : this.passwordValidator = false;
     } 
@@ -58,39 +55,32 @@ export class RegistrationFormComponent implements OnInit {
     }
   }
 
+  register(userForm) {
+  
+    this.intialModelCheck = true
+    this.emailChecker();
+    this.passwordChecker();
+    this.phoneNumberChecker();
 
-  //"authorId" : "Author1234"
-
-   register(userForm) {
-    
-    this.intialModelCheck = true;
-    console.log(userForm);
-     console.log(userForm.value);
-
-     this.emailChecker();
-     this.passwordChecker();
-     this.phoneNumberChecker();
-     console.log(this.emailValidator && this.passwordValidator && this.phoneNumberValidator);
-     if(this.emailValidator && this.passwordValidator && this.phoneNumberValidator)
-     {
-       console.log(this.model);
-       console.log(this.model.userName);
-        var registerUserData = {
-          userName: this.model.userName,
-          password : this.model.password,
-          phoneNumber : this.model.phoneNumber,
-          emailId : this.model.email
-          };
+    if(this.emailValidator && this.passwordValidator && this.phoneNumberValidator)
+    {
       
-          console.log(registerUserData.userName,registerUserData.emailId);
-          this.httpClient.register(registerUserData).subscribe( res => {
-              alert("success")
-            },
-            err => {
-              console.log("Error occured");
-            }
-          );
-      }
-   }
+      var registerUserData = {
+        userName: this.model.userName,
+        password : this.model.password,
+        phoneNumber : this.model.phoneNumber,
+        emailId : this.model.email
+      };
+       
+      this.httpClient.register(registerUserData).subscribe( res => {
+          alert("success")
+        },
+        err => {
+          console.log("Error occured");
+        }
+      );
+      
+    }
+  }
 
 }
