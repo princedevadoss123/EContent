@@ -1,6 +1,6 @@
 <!-- <div class = "form-align">
 </div> -->
-<form class="reg-form"> 
+<form class="reg-form" (ngSubmit)="f.form.valid && register(f)" #f="ngForm" novalidate> 
   <div class="form-head">
     <ul class="form-nav-list">
       <li id="userHeader" class="form-nav-list-item" [ngClass]="{ 'active': userForm}"><a (click)="onUserClick()">User</a></li>
@@ -9,53 +9,72 @@
   </div>
   <div id="user" class="form-body" [ngClass]="{ 'hide': authorForm}">
     <div class="form-control">
-      <label for="name"></label>
-      <input type="text" name="name" placeholder="Name">
+      <label for="userName"></label>
+      <input type="text" name="userName" placeholder="Name" [ngClass]="{ 'input-error': (f.submitted && !userName.valid)}" 
+       [(ngModel)]="model.userName" #userName="ngModel" required>
+      <!-- <b> {{refName.className}} </b> #refName-->
+       <div *ngIf="(f.submitted && !userName.valid)" class="normal-block" [ngClass]="{ 'error-block': f.submitted && !userName.valid }">Name is required</div> 
     </div>
-    
     <div class="form-control">
       <label for="email"></label>
-      <input type="email" name="email" placeholder="Email">
+      <input type="email" name="email" placeholder="Email ID" name="email" [(ngModel)]="model.email" 
+      [ngClass]="{ 'input-error': (f.submitted && !userName.valid) || !emailValidator }" [(ngModel)]="model.email" (ngModelChange)="emailChecker()" #email="ngModel" required >
+      <div *ngIf="(f.submitted && !email.valid)" class="normal-block" [ngClass]="{ 'error-block': f.submitted && !email.valid }">Email is required</div> 
+      <div class="normal-block" [ngClass]="{ 'error-block': !(f.submitted && !email.valid) && !emailValidator }">Please enter correct Email ID</div> 
     </div>
-    
     <div class="form-control">
       <label for="password"></label>
-      <input type="password" name="password" placeholder="Password">
+      <input type="password" name="password" placeholder="Password" [ngClass]="{ 'input-error': (f.submitted && !password.valid) || !passwordValidator }"
+      [(ngModel)]="model.password" (ngModelChange)="passwordChecker()" #password="ngModel" required/>
+       <div *ngIf="(f.submitted && !password.valid)" class="normal-block" [ngClass]="{ 'error-block' : f.submitted && !password.valid }">Password is required</div>
+      <div class="normal-block" [ngClass]="{ 'error-block': !(f.submitted && !password.valid) && !passwordValidator }">Password must contain minimum eight characters at least one letter and one number</div>
     </div>
-    
     <div class="form-control">
-      <label for="phone"></label>
-      <input type="text" name="phone" placeholder="Phone">
-    </div>
+      <label for="phoneNumber"></label>
+      <input type="text" name="phoneNumber" placeholder="Phone Number" [ngClass]="{ 'input-error': (f.submitted && !phoneNumber.valid) || !phoneNumberValidator}" 
+       [(ngModel)]="model.phoneNumber" (ngModelChange)="phoneNumberChecker()" #phoneNumber="ngModel" required/>
+       <div *ngIf="(f.submitted && !phoneNumber.valid)" class="normal-block" [ngClass]="{ 'error-block': f.submitted && !phoneNumber.valid}">Phone Number is required</div>
+       <div class="normal-block" [ngClass]="{ 'error-block': !(f.submitted && !phoneNumber.valid) && !phoneNumberValidator }">Invalid Phone Number</div>
+    </div> 
   </div>
+
   <div id="author" class="form-body" [ngClass]="{ 'hide': userForm}">
     <div class="form-control">
-      <label for="name"></label>
-      <input type="text" name="name" placeholder="Name">
+      <label for="userName"></label>
+      <input type="text" name="userName" placeholder="Name" [ngClass]="{ 'input-error': (f.submitted && !userName.valid)}" 
+       [(ngModel)]="model.userName" #userName="ngModel" required>
+      <!-- <b> {{refName.className}} </b> #refName-->
+       <div *ngIf="(f.submitted && !userName.valid)" class="normal-block" [ngClass]="{ 'error-block': f.submitted && !userName.valid }">Name is required</div>
     </div>
-    
     <div class="form-control">
       <label for="authorid"></label>
       <input type="text" name="authorid" placeholder="Author ID">
     </div>
-    
     <div class="form-control">
       <label for="email"></label>
-      <input type="email" name="email" placeholder="Email">
+      <input type="email" name="email" placeholder="Email ID" name="email" [(ngModel)]="model.email" 
+      [ngClass]="{ 'input-error': (f.submitted && !userName.valid) || !emailValidator }" [(ngModel)]="model.email" (ngModelChange)="emailChecker()" #email="ngModel" required >
+      <div *ngIf="(f.submitted && !email.valid)" class="normal-block" [ngClass]="{ 'error-block': f.submitted && !email.valid }">Email is required</div>
+      <div class="normal-block" [ngClass]="{ 'error-block': !(f.submitted && !email.valid) && !emailValidator }">Please enter correct Email ID</div>
     </div>
-    
     <div class="form-control">
       <label for="password"></label>
-      <input type="password" name="password" placeholder="Password">
+      <input type="password" name="password" placeholder="Password" [ngClass]="{ 'input-error': (f.submitted && !password.valid) || !passwordValidator }"
+      [(ngModel)]="model.password" (ngModelChange)="passwordChecker()" #password="ngModel" required/>
+      <div *ngIf="(f.submitted && !password.valid)" class="normal-block" [ngClass]="{ 'error-block' : f.submitted && !password.valid }">Password is required</div>
+      <div class="normal-block" [ngClass]="{ 'error-block': !(f.submitted && !password.valid) && !passwordValidator }">Password must contain minimum eight characters at least one letter and one number</div>
     </div>
-    
     <div class="form-control">
-      <label for="phone"></label>
-      <input type="text" name="phone" placeholder="Phone">
+      <label for="phoneNumber"></label>
+      <input type="text" name="phoneNumber" placeholder="Phone Number" [ngClass]="{ 'input-error': (f.submitted && !phoneNumber.valid) || !phoneNumberValidator}" 
+       [(ngModel)]="model.phoneNumber" (ngModelChange)="phoneNumberChecker()" #phoneNumber="ngModel" required/>
+       <div *ngIf="(f.submitted && !phoneNumber.valid)" class="normal-block" [ngClass]="{ 'error-block': f.submitted && !phoneNumber.valid}">Phone Number is required</div>
+       <div class="normal-block" [ngClass]="{ 'error-block': !(f.submitted && !phoneNumber.valid) && !phoneNumberValidator }">Invalid Phone Number</div>
     </div>
   </div>
+
   <div class="form-footer">
-    <button id="form-submit"> Proceed </button>
+    <button id="form-submit" [disabled]="!f.form.valid"> Proceed </button>
   </div>
 </form>
 

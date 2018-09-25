@@ -1,0 +1,25 @@
+<p>
+  toast works!
+</p>
+
+<h2>Toast Message</h2>
+
+<!--<div class="" *ngFor="let msg of MessageType">
+    <button type="button" name="button" (click)="selectMsg(msg)"> {{msg}} </button>  
+   </div> -->
+
+  <div [ngSwitch]="currentCSSClass" >
+      <div *ngSwitchCase="'snackbar successShow'"><div [ngClass]="currentCSSClass"> Some Text </div> </div>
+      <div *ngSwitchCase="snackbar infoShow"><div [ngClass]="currentCSSClass"> Some Text </div></div>
+      <div *ngSwitchCase="snackbar warnShow"><div [ngClass]="currentCSSClass"> Some Text </div></div>
+      <div *ngSwitchCase="snackbar errorShow"><div [ngClass]="currentCSSClass"> Some Text </div></div>
+      <div *ngSwitchDefault>None of the btn are selected</div>
+    </div>
+
+<div *ngFor="let msg of MessageType">
+  <button type="button" name="button" (click)= "setCSSClass(msg)" > Button </button>
+  <!-- <button type="button" name="button" (click)= "setStyle()"> Warning </button>
+  <button type="button" name="button" (click)= "setStyle()"> Error </button> -->
+</div>
+
+<hr>
