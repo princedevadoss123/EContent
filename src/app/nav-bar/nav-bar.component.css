@@ -1,0 +1,39 @@
+
+  
+  .nav-bar-flex{
+    display: flex;
+    flex-flow: row;
+    background: linear-gradient(to right,#004C40, #48A999);;
+    height: 56px;
+    opacity: 0.8;
+    align-items: center;
+    filter: blur(0.2px);
+  }
+  
+  .nav-bar-flex-item{
+   margin-left: 40px;
+  }
+  
+  .nav-bar-flex-item a{
+    padding: 16px;
+    /* font-family: "Segoe UI"; */
+    font-size: 1em;
+    letter-spacing: 1px;
+    color: white;
+    text-decoration: none;
+    box-sizing: border-box;
+    opacity: 0.8;
+    transition: opacity .3s ease-out;
+  }
+  
+  .nav-bar-flex-item img{
+    height: 56px;
+    width: 90px;
+  }
+  
+  .nav-bar-flex-item a:hover{
+    opacity: 1;
+    color: white;
+    border-bottom: 2px solid #FFF;
+  }
+  

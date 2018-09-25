@@ -1,0 +1,31 @@
+<div class="align-form">
+</div>
+<div class="login-register-wrapper">
+  <div class="login-register-container">
+     <div class="login-register-header">
+       <label>LOGIN</label>
+     </div>
+     <form class="login-body" #LogInForm="ngForm">
+       <div class="login-input">
+          <label for="name">Email</label>
+          <input class="form-control" type="email" [(ngModel)]= "loginModel.email" name="name" placeholder="Enter your Email" required>
+          <div class="normal-block" [ngClass] = "{ 'error-block': (LogInForm.submitted && !emailValid) }">Enter Correct Email Id</div>
+      </div>
+      <div class="login-input">
+         <label for="password">Password</label>
+         <input class="form-control" type="password" [(ngModel)] = "loginModel.password" name="password" placeholder="Enter your Password" required>
+         <div class="normal-block" [ngClass] = "{ 'error-block': (LogInForm.submitted && !passwordValid) }">Password must be atleast 8 characters</div>
+     </div>
+     <div class="login-submit">
+      <!-- <input type="checkbox" title="I agree to the terms and conditions"> -->
+      <button type="submit" [disabled]="!LogInForm.form.valid" (click)="onLogIn()">PROCEED</button>
+    </div>
+     </form>
+     <div class="login-footer">
+       <div class="login-extra">
+           <a id="fg" href="#">Forgot Password?</a>
+           <a id="cg" href="#">Change Password</a>
+       </div>
+     </div>
+  </div>
+</div>
