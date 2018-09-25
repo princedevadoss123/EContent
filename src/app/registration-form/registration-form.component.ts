@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ValidationService } from '../../services/validation/validation.service';
 
+
 @Component({
   selector: 'app-registration-form',
   templateUrl: './registration-form.component.html',
