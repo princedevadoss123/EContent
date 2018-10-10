@@ -5,6 +5,7 @@ const Server = require('./server-module/server');
 const app = express();
 var cookieExtractor = require('./service/cookie-extractor');
 var cookieParser = require('cookie-parser');
+// var csrf = require('csurf');
 const bearerToken = require('express-bearer-token');
 let Log = require('log');
 let logger = new Log();
@@ -27,6 +28,25 @@ passportJwtInitializer(cookieExtractor)
 
 //Handling cookies
 app.use(cookieParser());
+// app.use(csrf({ cookie: true }));
+// app.use(function(req, res, next) {
+//     console.log('Inside Token generation');
+//     logger.info('Inside Token generation');
+//     var token = req.csrfToken();
+//     res.cookie('XSRF-TOKEN', token);
+//     logger.info(token);
+//     console.log(token);
+//     next();
+// });
+
+// error handler
+// app.use(function (err, req, res, next) {
+//     if (err.code !== 'EBADCSRFTOKEN') return next(err)
+   
+//     // handle CSRF token errors here
+//     res.status(403);
+//     res.send('Invalid CSRF Token');
+//   });
 
 //Bearer token storage
 app.use(bearerToken());

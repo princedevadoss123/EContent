@@ -1,4 +1,6 @@
 let AuthService = require('../../services/authentication');
+var cookieParser = require('cookie-parser');
+var csrf = require('csurf');
 function LoginController() {
 }
 
@@ -15,6 +17,10 @@ function _login(request, response) {
     authService.loginService()
     .then(function(accountHolder) {
         response.cookie('userSession', accountHolder, { maxAge: 900000, httpOnly: true });
+        var token = request.csrfToken();
+        response.cookie('XSRF-TOKEN', token, { maxAge: 900000, httpOnly: false });
+        logger.info(token);
+        console.log(token);
         response.send(200);
     })
     .catch(function(error) {
