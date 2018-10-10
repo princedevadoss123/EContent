@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
+import { AuthServiceService } from './services/auth-api/auth-service.service';
 import { AppComponent } from './app.component';
 import { RegistrationFormComponent } from './registration-form/registration-form.component';
 import { routing } from './app.routing';
@@ -22,10 +24,13 @@ import { LauncherComponent } from './launcher/launcher.component';
     routing,
     BrowserModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpModule,
+    HttpClientModule
   ],
   providers: [
-    ValidationService
+    ValidationService,
+    AuthServiceService
   ],
   bootstrap: [AppComponent]
 })
